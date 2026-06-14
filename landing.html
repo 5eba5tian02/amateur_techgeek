@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AmateurTechGeek — Technologie. Tools. Wachstum.</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0a0a0f;
+      --surface:  #111118;
+      --border:   #1e1e2e;
+      --accent:   #6c63ff;
+      --accent2:  #00d4aa;
+      --text:     #e8e8f0;
+      --muted:    #8888a0;
+      --radius:   12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.55rem 1.2rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem 4rem;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% -10%, rgba(108,99,255,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(0,212,170,0.12) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(108,99,255,0.12);
+      border: 1px solid rgba(108,99,255,0.3);
+      color: var(--accent);
+      padding: 0.35rem 0.9rem;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      max-width: 800px;
+      margin-bottom: 1.25rem;
+    }
+    h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 0.85rem 2rem;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+    /* ── SCROLL HINT ── */
+    .scroll-hint {
+      margin-top: 4rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .scroll-hint .arrow {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+    }
+
+    /* ── SECTIONS SHARED ── */
+    section { padding: 5rem 1.5rem; }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 540px;
+      margin-bottom: 3rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── FEATURES ── */
+    .features { background: var(--bg); }
+
+    .features-header { text-align: center; }
+    .features-header .section-sub { margin-left: auto; margin-right: auto; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover { border-color: rgba(108,99,255,0.4); transform: translateY(-2px); }
+
+    .card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── COMING SOON RIBBON ── */
+    .chip {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: rgba(0,212,170,0.1);
+      color: var(--accent2);
+      border: 1px solid rgba(0,212,170,0.25);
+      padding: 0.2rem 0.55rem;
+      border-radius: 99px;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ── SAAS PREVIEW ── */
+    .saas { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .saas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .saas-mockup {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      font-family: 'Consolas', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      position: relative;
+      overflow: hidden;
+    }
+    .saas-mockup::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .saas-mockup .dot-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 1rem;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.r { background: #ff5f57; }
+    .dot.y { background: #febc2e; }
+    .dot.g { background: #28c840; }
+
+    .mock-line { margin-bottom: 0.4rem; display: flex; gap: 0.5rem; }
+    .mock-line .k { color: var(--accent); }
+    .mock-line .s { color: var(--accent2); }
+    .mock-line .c { color: #888; }
+
+    @media (max-width: 700px) {
+      .saas-grid { grid-template-columns: 1fr; }
+      .saas-mockup { display: none; }
+    }
+
+    /* ── ARTICLES ── */
+    .articles { background: var(--bg); }
+
+    .article-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .article-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .article-card:hover { border-color: rgba(108,99,255,0.4); transform: translateY(-2px); }
+
+    .article-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(108,99,255,0.1);
+      border: 1px solid rgba(108,99,255,0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: 99px;
+      width: fit-content;
+    }
+
+    .article-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .article-card p { font-size: 0.875rem; color: var(--muted); }
+
+    .article-card .read-more {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: auto;
+      text-decoration: none;
+    }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .newsletter-box {
+      background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,212,170,0.06));
+      border: 1px solid rgba(108,99,255,0.2);
+      border-radius: 20px;
+      padding: 3.5rem 2rem;
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .newsletter-box h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.03em;
+    }
+
+    .newsletter-box p {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 420px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .input-row input {
+      flex: 1;
+      min-width: 0;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-row input:focus { border-color: var(--accent); }
+    .input-row input::placeholder { color: var(--muted); }
+
+    .input-row button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.4rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .input-row button:hover { opacity: 0.85; }
+
+    .fine-print { font-size: 0.75rem; color: var(--muted); margin-top: 0.75rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    /* ── RESPONSIVE NAV ── */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="logo" href="#"><span>#</span>AmateurTechGeek</a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#artikel">Artikel</a></li>
+  </ul>
+  <a class="nav-cta" href="#newsletter">Kostenlos starten</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="badge">🚀 Jetzt in der Beta</div>
+  <h1>Technologie verstehen.<br /><span class="highlight">Produktiver werden.</span></h1>
+  <p class="hero-sub">
+    Praktische Tools, ehrliche Artikel und Strategien zur Selbstoptimierung — für alle, die Technologie wirklich nutzen wollen.
+  </p>
+  <div class="hero-actions">
+    <a href="#newsletter" class="btn-primary">Frühen Zugang sichern</a>
+    <a href="#features" class="btn-secondary">Mehr erfahren</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="features-header">
+      <span class="section-label">Was dich erwartet</span>
+      <h2 class="section-title">Alles, was du brauchst — an einem Ort.</h2>
+      <p class="section-sub">Von praxisnahen Tools bis zu tiefgründigen Artikeln — AmateurTechGeek deckt alles ab, was dich voranbringt.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🛠️</div>
+        <h3>SaaS-Tools</h3>
+        <p>Smarte Web-Apps, die dich bei Produktivität, Automatisierung und Selbstmanagement unterstützen — direkt im Browser.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📖</div>
+        <h3>Tiefgründige Artikel</h3>
+        <p>Keine oberflächlichen Tutorials. Echte Einblicke in Technologie, Workflows und mentale Systeme für den Alltag.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Selbstoptimierung</h3>
+        <p>Methoden und Werkzeuge, die aus deiner Zeit das Maximum herausholen — technisch und mental.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>KI-Guides</h3>
+        <p>Lerne, wie du KI-Tools effektiv in deinen Workflow integrierst — praktisch, ohne Hype.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <h3>Tool-Reviews</h3>
+        <p>Ehrliche Bewertungen der beliebtesten Apps und Services — damit du nicht für das Falsche bezahlst.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h3>Community</h3>
+        <p>Tausch dich mit anderen Tech-Enthusiasten aus, die genauso neugierig sind wie du.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SAAS PREVIEW ── -->
+<section class="saas" id="tools">
+  <div class="container">
+    <div class="saas-grid">
+      <div>
+        <span class="section-label">Kommende Tools</span>
+        <div class="chip">Bald verfügbar</div>
+        <h2 class="section-title">Tools, die wirklich<br />etwas bewegen.</h2>
+        <p class="section-sub">
+          Ich entwickle SaaS-Apps, die ich selbst täglich nutzen würde — fokussiert, schnell und ohne unnötigen Overhead.
+        </p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.75rem;">
+          <li style="display:flex;align-items:center;gap:0.75rem;color:var(--muted);font-size:0.95rem;">
+            <span style="color:var(--accent2);">✓</span> Fokus-Timer mit Aufgaben-Integration
+          </li>
+          <li style="display:flex;align-items:center;gap:0.75rem;color:var(--muted);font-size:0.95rem;">
+            <span style="color:var(--accent2);">✓</span> KI-gestützter Notiz-Organizer
+          </li>
+          <li style="display:flex;align-items:center;gap:0.75rem;color:var(--muted);font-size:0.95rem;">
+            <span style="color:var(--accent2);">✓</span> Habit-Tracker mit Analyse-Dashboard
+          </li>
+          <li style="display:flex;align-items:center;gap:0.75rem;color:var(--muted);font-size:0.95rem;">
+            <span style="color:var(--accent2);">✓</span> Tech-Stack Planer für Indie-Devs
+          </li>
+        </ul>
+      </div>
+      <div class="saas-mockup">
+        <div class="dot-row">
+          <div class="dot r"></div>
+          <div class="dot y"></div>
+          <div class="dot g"></div>
+        </div>
+        <div class="mock-line"><span class="k">import</span> <span class="s">{ focus }</span> <span class="k">from</span> <span class="s">'@atg/tools'</span></div>
+        <div class="mock-line" style="margin-top:0.75rem;"><span class="k">const</span> session = <span class="s">focus</span>.<span class="k">start</span>({</div>
+        <div class="mock-line" style="padding-left:1rem;"><span class="s">duration</span>: <span style="color:#f97316;">25</span>,</div>
+        <div class="mock-line" style="padding-left:1rem;"><span class="s">task</span>: <span style="color:#22d3ee;">"Landing Page fertigstellen"</span>,</div>
+        <div class="mock-line" style="padding-left:1rem;"><span class="s">breaks</span>: <span style="color:#a78bfa;">true</span></div>
+        <div class="mock-line">})</div>
+        <div class="mock-line" style="margin-top:0.75rem;"><span class="c">// ⏱ 23:48 verbleibend...</span></div>
+        <div class="mock-line" style="margin-top:0.75rem;"><span class="s">session</span>.<span class="k">onComplete</span>(() => {</div>
+        <div class="mock-line" style="padding-left:1rem;"><span class="s">notify</span>(<span style="color:#22d3ee;">"Nice work! 🎯"</span>)</div>
+        <div class="mock-line">})</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ARTIKEL PREVIEW ── -->
+<section class="articles" id="artikel">
+  <div class="container">
+    <span class="section-label">Artikel</span>
+    <h2 class="section-title">Geschrieben für Neugierige.</h2>
+    <p class="section-sub">Kein Clickbait, kein Fluff — nur Inhalte, die dir wirklich etwas beibringen.</p>
+    <div class="article-cards">
+      <div class="article-card">
+        <span class="article-tag">Produktivität</span>
+        <h3>Warum dein Aufgabensystem gegen dich arbeitet — und wie du es reparierst</h3>
+        <p>Die meisten To-do-Apps scheitern nicht an Features, sondern an falschen Grundannahmen über wie unser Gehirn funktioniert.</p>
+        <a class="read-more" href="#">Artikel lesen →</a>
+      </div>
+      <div class="article-card">
+        <span class="article-tag">KI & Tools</span>
+        <h3>ChatGPT im Alltag: 7 Workflows, die mir täglich 2 Stunden sparen</h3>
+        <p>Konkrete, kopierfertige Prompts und Setups — keine Theorie, nur was wirklich funktioniert.</p>
+        <a class="read-more" href="#">Artikel lesen →</a>
+      </div>
+      <div class="article-card">
+        <span class="article-tag">Selbstoptimierung</span>
+        <h3>Das Minimalism-Prinzip für deinen digitalen Alltag</h3>
+        <p>Weniger Apps, klarere Prozesse, mehr Output. Wie du mit weniger digitalen Tools mehr erreichst.</p>
+        <a class="read-more" href="#">Artikel lesen →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── NEWSLETTER ── -->
+<section class="newsletter" id="newsletter">
+  <div class="container">
+    <div class="newsletter-box">
+      <span class="section-label">Newsletter</span>
+      <h2>Bleib auf dem Laufenden.</h2>
+      <p>Kein Spam. Nur neue Tools, Artikel und Insider-Tipps — direkt in dein Postfach.</p>
+      <div class="input-row">
+        <input type="email" placeholder="deine@email.de" />
+        <button type="button">Anmelden</button>
+      </div>
+      <p class="fine-print">Kostenlos · Jederzeit abmeldbar · Kein Spam</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+      <a href="#">Kontakt</a>
+    </div>
+    <p>© 2026 AmateurTechGeek · Gebaut mit ❤️ und zu viel Kaffee</p>
+  </div>
+</footer>
+
+</body>
+</html>
