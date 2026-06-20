@@ -1,25 +1,42 @@
+
+
+function Layout() {
+  return (
+    <>
+        <nav>
+        <a className="logo" href="#"><span>#</span>AmateurTechGeek</a>
+        <ul> 
+          <li><a href="#home">Home </a></li>
+          <li><a href="#tools">Tools </a></li>
+          <li><a href="tutorial">Tutorial </a></li>
+        </ul>
+       </nav>
+    </>
+  )
+}
+
 function Page() {
-  return <h1> Hello, Next.js!</h1>
-}
+  return (
+    <> 
+    <section className="hero">
+       <h1> Welcome to Amateur_TechGeek</h1> 
+      <h2 className="hero-sub">
+    Tools and Tutorials to become the top 1% Tech Geek!
+   </h2>
+   </section>
 
-function Subheadline() {
-  return <h2> this is the subheadline </h2>
-}
+   </>
+   );
 
-function Footer() {
-  return <nav>
-    <p> hello this is text</p>
-    <p> is this human language</p>
-  </nav>
-
-}
+  }
 
 export default function LandingPage() {
   return (
     <div>
+      <Layout />
       <Page />
-      <Subheadline />
-      <Footer />
+
+      
     </div>
   )
 }
