@@ -1,10 +1,13 @@
 import type { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  
+  const baseUrl = 'https://amateurtechgeek.com';
+
   return [
     {
-      url: 'https://amateurtechgeek.com',
-      lastModified: '2026-06-06',
+      url: baseUrl,
+      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
     },
