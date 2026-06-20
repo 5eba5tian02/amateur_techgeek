@@ -19,7 +19,7 @@ function Page() {
   return (
     <> 
     <section className="hero">
-       <h1> Welcome to Amateur_TechGeek</h1> 
+       <h1> Ilia Stinkt</h1> 
       <h2 className="hero-sub">
     Tools and Tutorials to become the top 1% Tech Geek!
    </h2>
