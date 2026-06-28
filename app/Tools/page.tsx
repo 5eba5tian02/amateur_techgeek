@@ -18,32 +18,27 @@ function Headline() {
 
 function PlayButton() {
 
-  const [flag, setFlag] = useState(false);
-  // const audioRef = useRef(new Audio("/BirdNoises.mp3"));
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio("/BirdNoises.mp3");
-    audioRef.current.preload = "auto";
-    audioRef.current.loop = true;
-
-  }, []);
-
-  function startBirdChirping() {
-    
-    console.log(audioRef.current);
-    console.log(audioRef.current.paused);
-    console.log(audioRef.current.currentTime);
-
-    
-    if (!audioRef.current) return;
-
-    if (audioRef.current.paused) {
-    audioRef.current.play();
-  } else {
-    audioRef.current.pause();
-  } 
+     if (!audioRef.current) {
+       const audio = new Audio("/BirdNoises.mp3");
+       audio.loop = true;
+       audio.preload = "auto";
+       audioRef.current = audio;
   }
+}, []);
+
+function startBirdChirping() {
+  const audio = audioRef.current;
+  if (!audio) return;
+
+  if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
+}
 
   return (
     <button
