@@ -1,6 +1,7 @@
 
 "use client"
-import { Play } from "lucide-react";
+import {useState, useRef, useEffect} from 'react';
+import {Play} from "lucide-react";
 
 function Headline() {
   return (
@@ -16,11 +17,47 @@ function Headline() {
 }
 
 function PlayButton() {
-  function startBirdChirping() {
 
-    const audio = new Audio("\BirdNoises.mp3");
-    audio.play();
+  const [flag, setFlag] = useState(false);
+  // const audioRef = useRef(new Audio("/BirdNoises.mp3"));
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio("/BirdNoises.mp3");
+    audioRef.current.preload = "auto";
+    audioRef.current.loop = true;
+
+  }, []);
+
+  function startBirdChirping() {
     
+    console.log(audioRef.current);
+    console.log(audioRef.current.paused);
+    console.log(audioRef.current.currentTime);
+
+    
+    if( !flag ) {
+      audioRef.current.play();
+      setFlag(true);
+    }
+
+    else if(flag) {
+      
+      audioRef.current.pause();
+
+      
+      
+      console.log("Nach Pause: ");
+      console.log(audioRef.current.paused);
+      console.log(audioRef.current.currentTime);
+
+
+      setFlag(false);
+    }
+
+    else {
+      alert("Error in startBirdChirping function");
+    } 
   }
 
   return (
