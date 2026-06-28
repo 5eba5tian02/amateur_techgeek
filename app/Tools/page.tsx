@@ -36,28 +36,13 @@ function PlayButton() {
     console.log(audioRef.current.currentTime);
 
     
-    if( !flag ) {
-      audioRef.current.play();
-      setFlag(true);
-    }
+    if (!audioRef.current) return;
 
-    else if(flag) {
-      
-      audioRef.current.pause();
-
-      
-      
-      console.log("Nach Pause: ");
-      console.log(audioRef.current.paused);
-      console.log(audioRef.current.currentTime);
-
-
-      setFlag(false);
-    }
-
-    else {
-      alert("Error in startBirdChirping function");
-    } 
+    if (audioRef.current.paused) {
+    audioRef.current.play();
+  } else {
+    audioRef.current.pause();
+  } 
   }
 
   return (
