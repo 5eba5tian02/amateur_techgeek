@@ -1,19 +1,23 @@
 
 
+
+
 function Layout() {
   return (
     <>
         <nav>
         <a className="logo" href="#"><span>#</span>AmateurTechGeek</a>
         <ul> 
-          <li><a href="#home">Home </a></li>
-        <li><a href="\Tools">Bird Chirping </a></li>
-          <li><a href="tutorial">Tutorial </a></li>
+          <li><a href="/">Home </a></li>
+          <li><a href="/Tools/">Tools</a></li>
+          <li><a href="/utorial">Tutorial </a></li>
         </ul>
        </nav>
     </>
   )
 }
+
+
 
 function Page() {
   return (

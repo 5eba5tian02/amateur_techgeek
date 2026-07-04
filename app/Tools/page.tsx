@@ -1,69 +1,47 @@
+import Link from "next/link";
 
-"use client"
-import {useState, useRef, useEffect} from 'react';
-import {Play} from "lucide-react";
-
-function Headline() {
+function Layout() {
   return (
-    <section  style = {{position: 'absolute', top: '18%', left: '50%' , transform: 'translate(-50%, -50%)'}} className="hero">
-       <h1> Start Calm Focus Now !</h1> 
-       <h2 className="hero-sub">
-    Play bird chirping to lower stress!
-   </h2>
-      
-   </section>
-
-  );
+    <>
+        <nav>
+        <a className="logo" href="#"><span>#</span>AmateurTechGeek</a>
+        <ul> 
+          <li><a href="/">Home </a></li>
+          <li><a href="tutorial">Tutorial </a></li>
+        </ul>
+       </nav>
+    </>
+  )
 }
 
-function PlayButton() {
-
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-     if (!audioRef.current) {
-       const audio = new Audio("/BirdNoises.mp3");
-       audio.loop = true;
-       audio.preload = "auto";
-       audioRef.current = audio;
-  }
-}, []);
-
-function startBirdChirping() {
-  const audio = audioRef.current;
-  if (!audio) return;
-
-  if (audio.paused) {
-    audio.play();
-  } else {
-    audio.pause();
-  }
-}
-
+function ToolsMenu() {
   return (
-    <button
-      style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-      }}
-      className="w-36 h-36 rounded-full bg-[#4B3621] text-white flex items-center justify-center hover:bg-[#3A2919] transition-colors"
-      onClick={startBirdChirping}>
-      <Play size={64} fill="currentColor" />
-    </button>
-  );
-}
+    <main className="container">
+      <h1>My Tools</h1>
 
-export default function  Page() {
-   
-    return (
-      <div>
+      <div className="grid">
+        <Link href="/Tools/BirdChirping" className="card">
+          <h2> Bird Chirping</h2>
+          <p>Relax with natural bird sounds</p>
+        </Link>
 
-        <Headline />
-        <PlayButton />
-
+        <Link href="/Tools/OfficeYoga" className="card">
+          <h2> Office Yoga</h2>
+          <p>Quick exercises for your workday</p>
+        </Link>
       </div>
-    )
+    </main>
+  );
+}
 
+export default function LandingPage() {
+  return (
+    <div>
+      <Layout />
+      <h2> Hello</h2>
+      <ToolsMenu />
+
+      
+    </div>
+  )
 }
