@@ -1,22 +1,38 @@
+
 @import "tailwindcss";
 
 :root {
-  --background: #666D50;
-  --foreground: #171717;
-}
+  /* 🌿 Warm Forest / Spring Light */
+  --background: #f1d98e;     /* warmes Creme-Beige */
+  --foreground: #348034;     /* sanftes Waldgrau */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --accent: #4c7a3d;         /* warmes Grün */
+  --accent2: #7fbc6c;        /* helles Salbei-Grün */
+
+  --muted: #a4d695;          /* weiches gedämpftes Grün */
+  --border: rgba(122, 158, 110, 0.25);
+
+  --card: rgba(255, 255, 255, 0.6);
+  --shadow: rgba(0, 0, 0, 0.08);
+  --radius: 14px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #666D50;
-    --foreground: #ededed;
+    --background: #ecd090;   /* warmes helles Beige statt dunkel */
+    --foreground: #568156;
   }
+}
+
+body {
+  background:
+    radial-gradient(circle at top, rgba(58, 105, 44, 0.35), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(161, 228, 138, 0.18), transparent 60%),
+    var(--background);
+
+  color: var(--foreground);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  min-height: 100vh;
 }
 
 nav {
