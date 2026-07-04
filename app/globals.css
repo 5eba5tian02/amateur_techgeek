@@ -19,7 +19,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ecd090;   /* warmes helles Beige statt dunkel */
+    --background: #9b927c;   /* warmes helles Beige statt dunkel */
     --foreground: #568156;
   }
 }
